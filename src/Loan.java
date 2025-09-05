@@ -24,10 +24,21 @@ public class Loan {
     // need to throw the errors from this method specifically, as long as the errors
     // are thrown when the method is called.
     public void processLoan() {
-        // Validate availability and user state performed in assign methods
-        // Assign to item then to user
-        libraryItem.assignLoan(this);
+        // Make loan processing atomic: assign to user first, then to item.
+        // If assigning to item fails, rollback the user assignment.
+        // Validate arguments are non-null (already ensured in constructor).
         user.assignLoan(this);
+        try {
+            libraryItem.assignLoan(this);
+        } catch (RuntimeException e) {
+            // rollback user assignment to keep system consistent
+            try {
+                user.removeLoan(this);
+            } catch (Exception ignore) {
+                // ignore rollback errors
+            }
+            throw e;
+        }
     }
 
     // This handles the logic for returning the item. This will remove the record of

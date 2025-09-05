@@ -1,6 +1,3 @@
-import java.util.LinkedList;
-import java.util.Queue;
-
 public abstract class LibraryItem {
 
     private String title;

@@ -56,6 +56,10 @@ public class LibrarySystem {
     public void loanItem(LibraryItem item, LibraryUser user) {
         if (item == null || user == null)
             throw new IllegalArgumentException("Item and user must not be null");
+        if (!items.contains(item))
+            throw new IllegalArgumentException("Item is not registered in the system");
+        if (!users.contains(user))
+            throw new IllegalArgumentException("User is not registered in the system");
         // create loan and process
         Loan loan = new Loan(item, user, dateManager);
         loan.processLoan();
