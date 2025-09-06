@@ -2,27 +2,45 @@ public class ExternalBorrower extends LibraryUser {
 
     public ExternalBorrower(String name) {
         super(name);
-        // Implement your own additional logic here then remove the comment.
     }
 
+    // Constants
+    private static final int LOAN_LIMIT = 2;
+    private static final int ADDITIONAL_LOAN_TIME = 7;
+    private static final double FINE_MOD = 2.00;
+    private static final double SUSPENSION_LIMIT = 5.0;
+    private static final int MAGAZINE_LOAN_PERIOD = 14;
+    private static final int DVD_LOAN_PERIOD = 7;
+    private static final int BOOK_LOAN_PERIOD = 21;
+
+    // Methods (overrides)
     @Override
     public int getLoanPeriodForItem(LibraryItem item) {
-        return 0;
+        if (item == null)
+            throw new IllegalArgumentException("LibraryItem cannot be null");
+        else if (item instanceof Magazine) {
+            return MAGAZINE_LOAN_PERIOD;
+        } else if (item instanceof DVD) {
+            return DVD_LOAN_PERIOD;
+        } else if (item instanceof Book) {
+            return BOOK_LOAN_PERIOD;
+        }
+        return ADDITIONAL_LOAN_TIME;
     }
 
     @Override
     public int getLoanLimit() {
-        return 2;
+        return LOAN_LIMIT;
     }
 
     @Override
     public double getFineRateModifier() {
-        return 2.0;
+        return FINE_MOD;
     }
 
     @Override
     public double getFineSuspensionLimit() {
-        return 5.0;
+        return SUSPENSION_LIMIT;
     }
 
     @Override

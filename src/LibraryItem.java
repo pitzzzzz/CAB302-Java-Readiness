@@ -1,21 +1,19 @@
 public abstract class LibraryItem {
 
+    // Fields
     private String title;
     private Loan currentLoan;
 
-    // LibraryItem Constructor.
-    public LibraryItem(String title) {
-        setTitle(title);
-        this.currentLoan = null;
-    }
-
-    // Getter method for the item’s title.
+    // Getter
     public String getTitle() {
         return title;
     }
 
-    // Setter method for the item’s title. Should throw an appropriate exception if
-    // the title is not valid.
+    public Loan getCurrentLoan() {
+        return currentLoan;
+    }
+
+    // Setter
     public void setTitle(String title) {
         if (title == null || title.trim().isEmpty()) {
             throw new IllegalArgumentException("Title must not be null or empty");
@@ -23,16 +21,13 @@ public abstract class LibraryItem {
         this.title = title.trim();
     }
 
-    // Returns the current loan information for the item, or null if not currently
-    // loaned.
-    public Loan getCurrentLoan() {
-        return currentLoan;
+    // Constructor
+    public LibraryItem(String title) {
+        setTitle(title);
+        this.currentLoan = null;
     }
 
-    // Assigns the specified loan to the item. This method should perform
-    // appropriate validation checks to ensure
-    // that the loan is valid for the item, and throw appropriate exceptions as
-    // needed.
+    // Methods
     public void assignLoan(Loan loan) {
         if (loan == null)
             throw new IllegalArgumentException("Loan cannot be null");
@@ -44,20 +39,16 @@ public abstract class LibraryItem {
         this.currentLoan = loan;
     }
 
-    // Removes the specified loan from the user. Should throw an appropriate
-    // exception if the loan is not valid.
     public void removeLoan() {
         if (this.currentLoan == null)
             throw new IllegalArgumentException("No current loan to remove");
         this.currentLoan = null;
     }
 
-    // Returns true if currently loaned, otherwise false.
     public boolean isOnLoan() {
         return this.currentLoan != null;
     }
 
-    // Returns true if currently loaned, otherwise false.
     public boolean isAvailableForLoan() {
         return !isOnLoan();
     }
