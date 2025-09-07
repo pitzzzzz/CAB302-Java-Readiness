@@ -5,7 +5,7 @@ public class DateManager {
         return currentDay;
     }
 
-    public void advanceDays (int days) {
+    public void advanceDays(int days) {
         currentDay += days;
     }
 }

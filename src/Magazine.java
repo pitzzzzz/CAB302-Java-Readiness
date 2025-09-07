@@ -1,22 +1,29 @@
 public class Magazine extends LibraryItem {
+
+    // Fields
     private int issueNumber;
+
+    // Constants
     private static final double DAILY_LATE_FEE = 0.5;
     private static final int BASE_LOAN_PERIOD = 14;
     private static final double MAX_FINE = 10.0;
 
-    public Magazine(String title, int issueNumber) {
-        super(title);
-        setIssueNumber(issueNumber);
-    }
-
+    // Getter
     public int getIssueNumber() {
         return issueNumber;
     }
 
+    // Setter
     public void setIssueNumber(int issueNumber) {
-        if (issueNumber < 0)
-            throw new IllegalArgumentException("Issue number must be non-negative");
+        if (issueNumber <= 0)
+            throw new IllegalArgumentException("Issue number must be positive");
         this.issueNumber = issueNumber;
+    }
+
+    // Constructor
+    public Magazine(String title, int issueNumber) {
+        super(title);
+        setIssueNumber(issueNumber);
     }
 
     @Override

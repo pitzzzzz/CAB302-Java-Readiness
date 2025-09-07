@@ -1,8 +1,4 @@
 public class Student extends LibraryUser {
-    public Student(String name) {
-        super(name);
-        // Implement your own logic here (if needed) then remove the comment.
-    }
 
     // Constants
     private static final int LOAN_LIMIT = 5;
@@ -13,7 +9,12 @@ public class Student extends LibraryUser {
     private static final int DVD_LOAN_PERIOD = 14;
     private static final int BOOK_LOAN_PERIOD = 28;
 
-    // Methods (overrides)
+    // Constructor
+    public Student(String name) {
+        super(name);
+    }
+
+    // Methods
     @Override
     public int getLoanPeriodForItem(LibraryItem item) {
         if (item == null)
@@ -32,7 +33,7 @@ public class Student extends LibraryUser {
     public int getLoanLimit() {
         return LOAN_LIMIT;
     }
-    
+
     @Override
     public double getFineRateModifier() {
         return FINE_MOD;

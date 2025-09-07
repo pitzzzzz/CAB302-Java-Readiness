@@ -1,9 +1,5 @@
 public class Academic extends LibraryUser {
 
-    public Academic(String name) {
-        super(name);
-    }
-
     // Constants
     private static final int LOAN_LIMIT = 10;
     private static final int ADDITIONAL_LOAN_TIME = 14;
@@ -13,7 +9,12 @@ public class Academic extends LibraryUser {
     private static final int DVD_LOAN_PERIOD = 21;
     private static final int BOOK_LOAN_PERIOD = 35;
 
-    // Methods (overrides)
+    // Constructor
+    public Academic(String name) {
+        super(name);
+    }
+
+    // Methods
     @Override
     public int getLoanPeriodForItem(LibraryItem item) {
         if (item == null)
@@ -32,7 +33,7 @@ public class Academic extends LibraryUser {
     public int getLoanLimit() {
         return LOAN_LIMIT;
     }
-    
+
     @Override
     public double getFineRateModifier() {
         return FINE_MOD;

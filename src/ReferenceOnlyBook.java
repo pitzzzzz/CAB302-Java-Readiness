@@ -1,9 +1,16 @@
 public class ReferenceOnlyBook extends Book {
+
+    // Constants
+    private static final double DAILY_LATE_FEE = 0.0;
+    private static final int BASE_LOAN_PERIOD = 0;
+    private static final double MAX_FINE = 0.0;
+
+    // Constructor
     public ReferenceOnlyBook(String title, String isbn) {
         super(title, isbn);
-        // Implement your own logic here (if needed) then remove the comment.
     }
 
+    // Methods
     @Override
     public void assignLoan(Loan loan) {
         throw new ItemNotLoanableException("Reference-only book cannot be loaned");
@@ -15,8 +22,18 @@ public class ReferenceOnlyBook extends Book {
     }
 
     @Override
+    public double getDailyLateFee() {
+        return DAILY_LATE_FEE;
+    }
+
+    @Override
     public int getBaseLoanPeriod() {
-        return 0;
+        return BASE_LOAN_PERIOD;
+    }
+
+    @Override
+    public double getMaximumFine() {
+        return MAX_FINE;
     }
 
     @Override

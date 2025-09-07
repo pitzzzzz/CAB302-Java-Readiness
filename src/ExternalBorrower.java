@@ -1,9 +1,5 @@
 public class ExternalBorrower extends LibraryUser {
 
-    public ExternalBorrower(String name) {
-        super(name);
-    }
-
     // Constants
     private static final int LOAN_LIMIT = 2;
     private static final int ADDITIONAL_LOAN_TIME = 7;
@@ -13,7 +9,12 @@ public class ExternalBorrower extends LibraryUser {
     private static final int DVD_LOAN_PERIOD = 7;
     private static final int BOOK_LOAN_PERIOD = 21;
 
-    // Methods (overrides)
+    // Constructor
+    public ExternalBorrower(String name) {
+        super(name);
+    }
+
+    // Methods
     @Override
     public int getLoanPeriodForItem(LibraryItem item) {
         if (item == null)

@@ -1,19 +1,21 @@
 import java.util.*;
 
 public abstract class LibraryUser {
+
+    // Fields
     private String name;
     private java.util.List<Loan> loans = new java.util.ArrayList<>();
+
+    // Getter
+    public String getName() {
+        return name;
+    }
 
     // Setter
     public void setName(String name) {
         if (name == null || name.trim().isEmpty())
             throw new IllegalArgumentException("Name must not be null or empty");
         this.name = name.trim();
-    }
-
-    // Getter
-    public String getName() {
-        return name;
     }
 
     // Constructor
@@ -28,7 +30,7 @@ public abstract class LibraryUser {
         if (loan.getUser() != this)
             throw new IllegalArgumentException("Loan does not reference this user");
         if (isAtLoanLimit())
-            throw new BorrowLimitExceededException("User at loan limit");
+            throw new LoanLimitExceededException("User at loan limit");
         if (isSuspended())
             throw new AccountSuspendedException("User account suspended");
         loans.add(loan);
