@@ -43,6 +43,22 @@ public class LibrarySystem {
             throw new IllegalArgumentException("Item is not registered in the system");
         if (!users.contains(user))
             throw new IllegalArgumentException("User is not registered in the system");
+
+        // Check item availability and loanability
+        if (!item.isAvailableForLoan()) {
+            // Item not available because it's currently on loan
+            if (item.isOnLoan())
+                throw new ItemUnavailableException("Item is already on loan");
+            // Item is not loanable
+            throw new ItemNotLoanableException("Item is not available for loan");
+        }
+
+        // Checks user status
+        if (user.isSuspended())
+            throw new AccountSuspendedException("User account suspended");
+        if (user.isAtLoanLimit())
+            throw new LoanLimitExceededException("User at loan limit");
+
         // create loan and process
         Loan loan = new Loan(item, user, dateManager);
         loan.processLoan();

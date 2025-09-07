@@ -76,4 +76,9 @@ public abstract class LibraryUser {
     public abstract double getFineSuspensionLimit();
 
     public abstract String getUserRole();
+
+    // Helper methods for formatted outputs
+    public String getFineSuspensionLimitFormatted() {
+        return String.format("$%.2f", getFineSuspensionLimit());
+    }
 }

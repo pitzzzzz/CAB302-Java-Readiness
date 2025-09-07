@@ -1,3 +1,6 @@
+import java.text.NumberFormat;
+import java.util.Locale;
+
 public abstract class LibraryItem {
 
     // Fields
@@ -42,6 +45,15 @@ public abstract class LibraryItem {
         this.currentLoan = null;
     }
 
+    // overloaded method
+    public void removeLoan(Loan loan) {
+        if (loan == null)
+            throw new IllegalArgumentException("Loan cannot be null");
+        if (this.currentLoan == null || this.currentLoan != loan)
+            throw new IllegalArgumentException("Loan not found for this item");
+        this.currentLoan = null;
+    }
+
     public boolean isOnLoan() {
         return this.currentLoan != null;
     }
@@ -60,4 +72,18 @@ public abstract class LibraryItem {
     public abstract int getBaseLoanPeriod();
 
     public abstract double getMaximumFine();
+
+    // Helper methods (for formatted output)
+    public String getDailyLateFeeFormatted() {
+        return formatCurrency(getDailyLateFee());
+    }
+
+    public String getMaximumFineFormatted() {
+        return formatCurrency(getMaximumFine());
+    }
+
+    private static String formatCurrency(double amount) {
+        NumberFormat fmt = NumberFormat.getCurrencyInstance(Locale.US);
+        return fmt.format(amount);
+    }
 }
