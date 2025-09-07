@@ -15,7 +15,11 @@ public abstract class LibraryUser {
     public void setName(String name) {
         if (name == null || name.trim().isEmpty())
             throw new IllegalArgumentException("Name must not be null or empty");
-        this.name = name.trim();
+        String trimmed = name.trim();
+        // Allow letters, spaces and periods
+        if (!trimmed.matches("[A-Za-z. ]+"))
+            throw new IllegalArgumentException("Name must contain only letters, spaces and periods");
+        this.name = trimmed;
     }
 
     // Constructor

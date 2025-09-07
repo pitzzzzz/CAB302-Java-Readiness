@@ -7,10 +7,12 @@ public class Main {
     private static final Scanner scanner = new Scanner(System.in);
 
     /**
-     * This test data can be used to accelerate your own testing of your system. It removes the need for you to create
+     * This test data can be used to accelerate your own testing of your system. It
+     * removes the need for you to create
      * your own users and items every time you start the application.
      *
-     * NOTE: Just because the application works with this test data, it does not mean it will work with ALL data!
+     * NOTE: Just because the application works with this test data, it does not
+     * mean it will work with ALL data!
      */
     public static void populateTestData() {
         // Add users
@@ -52,32 +54,57 @@ public class Main {
             String choice = scanner.nextLine().trim();
 
             switch (choice) {
-                case "1": listUsers(); break;
-                case "2": listLibraryItems(); break;
-                case "3": createUser(); break;
-                case "4": createItem(); break;
-                case "5": loanItem(); break;
-                case "6": returnItem(); break;
-                case "7": userStatus(); break;
-                case "8": advanceCurrentDate(); break;
-                case "9": running = false; break;
-                default: System.out.println("Invalid option. Try again.");
+                case "1":
+                    listUsers();
+                    break;
+                case "2":
+                    listLibraryItems();
+                    break;
+                case "3":
+                    createUser();
+                    break;
+                case "4":
+                    createItem();
+                    break;
+                case "5":
+                    loanItem();
+                    break;
+                case "6":
+                    returnItem();
+                    break;
+                case "7":
+                    userStatus();
+                    break;
+                case "8":
+                    advanceCurrentDate();
+                    break;
+                case "9":
+                    running = false;
+                    break;
+                default:
+                    System.out.println("Invalid option. Try again.");
             }
         }
         System.out.println("Exiting Library System. Goodbye!");
     }
 
     // Handle all the interface control flow logic for creating a new user.
-    private static void createUser () {
+    private static void createUser() {
         System.out.print("\nEnter user name: ");
 
         String name;
         while (true) {
-            name = scanner.nextLine();
-            if (name.length() > 0) {
-                break;
+            name = scanner.nextLine().trim();
+            if (name.length() == 0) {
+                System.out.print("\nThe name cannot be empty. Please enter another name: ");
+                continue;
             }
-            System.out.print("\nThe name cannot be empty. Please enter another name: ");
+            // Validate against the same rule used in LibraryUser (letters, spaces, periods)
+            if (!name.matches("[A-Za-z. ]+")) {
+                System.out.print("\nName must contain only letters, spaces and periods. \nPlease enter another name: ");
+                continue;
+            }
+            break;
         }
 
         System.out.println("\nUser Types");
@@ -103,7 +130,7 @@ public class Main {
     }
 
     // Handle all the interface control flow logic for creating a new library item.
-    private static void createItem () {
+    private static void createItem() {
         System.out.print("\nEnter item title: ");
         String title = scanner.nextLine();
 
@@ -122,14 +149,15 @@ public class Main {
                 String isbn;
                 while (true) {
                     isbn = scanner.nextLine();
-                    if (isbn.length() > 0) break;
+                    if (isbn.length() > 0)
+                        break;
                     System.out.print("The ISBN cannot be empty. Please enter a valid ISBN: ");
                 }
                 item = new Book(title, isbn);
             }
             case "2" -> {
                 System.out.print("Enter runtime (minutes): ");
-                 while (true) {
+                while (true) {
                     try {
                         int runtime = Integer.parseInt(scanner.nextLine());
                         item = new DVD(title, runtime);
@@ -158,7 +186,8 @@ public class Main {
                 String isbn;
                 while (true) {
                     isbn = scanner.nextLine();
-                    if (isbn.length() > 0) break;
+                    if (isbn.length() > 0)
+                        break;
                     System.out.print("The ISBN cannot be empty. Please enter a valid ISBN: ");
                 }
                 item = new ReferenceOnlyBook(title, isbn);
@@ -169,7 +198,7 @@ public class Main {
     }
 
     // Handle all the interface control flow logic for loaning an item.
-    private static void loanItem () {
+    private static void loanItem() {
 
         LibraryUser user = selectUser();
         if (user.isSuspended()) {
@@ -183,7 +212,8 @@ public class Main {
             return;
         }
 
-        LibraryItem selectedItem = selectFromList(availableItems, item -> item.toString(), "Items available for loan: ");
+        LibraryItem selectedItem = selectFromList(availableItems, item -> item.toString(),
+                "Items available for loan: ");
 
         try {
             librarySystem.loanItem(selectedItem, user);
@@ -214,7 +244,7 @@ public class Main {
     }
 
     // Handle all the interface control flow logic for returning a loaned item.
-    private static void returnItem () {
+    private static void returnItem() {
 
         if (librarySystem.getUsers().isEmpty()) {
             System.out.println("\nNo users available.");
@@ -226,18 +256,21 @@ public class Main {
             System.out.println("\n" + user.getName() + " has no outstanding loans.");
             return;
         }
-        Loan loan = selectFromList(user.getLoans(), l -> l.getLibraryItem().getTitle(), "Select a currently loaned item:");
+        Loan loan = selectFromList(user.getLoans(), l -> l.getLibraryItem().getTitle(),
+                "Select a currently loaned item:");
 
         LibraryItem item = loan.getLibraryItem();
         librarySystem.returnItem(item);
 
         if (loan.isOverdue())
-            System.out.println(user.getName() + " has successfully returned " + item.getTitle() + ", paying a fine of " + loan.getLoanFine() + ".");
+            System.out.println(user.getName() + " has successfully returned " + item.getTitle() + ", paying a fine of "
+                    + loan.getLoanFine() + ".");
         else
             System.out.println(user.getName() + " has successfully returned " + item.getTitle() + ".");
     }
 
-    // Handle all the interface control flow logic for viewing a detailed summary about a specific user.
+    // Handle all the interface control flow logic for viewing a detailed summary
+    // about a specific user.
     private static void userStatus() {
         if (librarySystem.getUsers().isEmpty()) {
             System.out.println("\nNo users available.");
@@ -265,7 +298,7 @@ public class Main {
     }
 
     // Prints a complete list of all users in the library system to the console.
-    private static void listUsers () {
+    private static void listUsers() {
         if (librarySystem.getUsers().isEmpty()) {
             System.out.println("\nThere are no users in the system.");
             return;
@@ -278,7 +311,7 @@ public class Main {
     }
 
     // Prints a complete list of all library items, including their current status.
-    private static void listLibraryItems () {
+    private static void listLibraryItems() {
         if (librarySystem.getLibraryItems().isEmpty()) {
             System.out.println("\nThere are no library items in the system.");
             return;
@@ -291,11 +324,16 @@ public class Main {
     }
 
     /**
-     * Helper method to display a list of items and allow the user to select an option.
-     * @param items The list of items which is used to populate the UI list.
-     * @param displayFunction The method used to convert an item into a String (to build the UI list).
-     * @param prompt The header label for the list.
-     * @return Returns the item the user has selected. The selection will continue until the user selects a valid item.
+     * Helper method to display a list of items and allow the user to select an
+     * option.
+     * 
+     * @param items           The list of items which is used to populate the UI
+     *                        list.
+     * @param displayFunction The method used to convert an item into a String (to
+     *                        build the UI list).
+     * @param prompt          The header label for the list.
+     * @return Returns the item the user has selected. The selection will continue
+     *         until the user selects a valid item.
      */
     private static <T> T selectFromList(List<T> items, Function<T, String> displayFunction, String prompt) {
         System.out.println("\n");
@@ -327,10 +365,12 @@ public class Main {
     }
 
     /***
-     * Prompts the user to advance the current date in the library simulator forward, checking for appropriate user
-     * input and prompting the user to enter a new value if the input given is invalid.
+     * Prompts the user to advance the current date in the library simulator
+     * forward, checking for appropriate user
+     * input and prompting the user to enter a new value if the input given is
+     * invalid.
      */
-    private static void advanceCurrentDate () {
+    private static void advanceCurrentDate() {
         System.out.print("\nEnter a number of days to advance: ");
         int days = 0;
         while (true) {
