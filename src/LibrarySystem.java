@@ -69,7 +69,7 @@ public class LibrarySystem {
             throw new IllegalArgumentException("Item cannot be null");
         Loan loan = item.getCurrentLoan();
         if (loan == null)
-            throw new IllegalArgumentException("Item is not currently on loan");
+            throw new ItemNotLoanableException("Item is not currently on loan");
         loan.processReturn();
     }
 

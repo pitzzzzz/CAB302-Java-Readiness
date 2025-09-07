@@ -43,7 +43,7 @@ public class Loan {
     // Methods
     public void processLoan() {
         if (this.checkoutDay != -1)
-            throw new IllegalStateException("Loan has already been processed");
+            throw new ItemNotLoanableException("Loan has already been processed");
         // record the checkout and return days at the time the loan is processed
         this.checkoutDay = dateManager.getCurrentDay();
         this.returnDay = checkoutDay + libraryItem.getBaseLoanPeriod() + user.getLoanPeriodForItem(libraryItem);

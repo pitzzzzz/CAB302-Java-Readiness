@@ -40,7 +40,7 @@ public abstract class LibraryUser {
         if (loan == null)
             throw new IllegalArgumentException("Loan cannot be null");
         if (!loans.remove(loan))
-            throw new IllegalArgumentException("Loan not found for this user");
+            throw new ItemNotLoanableException("Loan not found for this user");
     }
 
     public boolean isSuspended() {
